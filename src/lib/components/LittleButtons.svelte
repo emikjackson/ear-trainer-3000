@@ -1,6 +1,11 @@
 <script>
 	import { key } from '$lib/store.js';
+	import { getScaleByKey } from '$lib/helpers.js';
 	import Rotate from '$lib/components/icons/Rotate.svelte';
+	let cool;
+
+	$: cool = getScaleByKey($key);
+	$: console.log('SCALE', cool);
 </script>
 
 <div class="wrapper">

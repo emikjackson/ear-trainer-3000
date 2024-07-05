@@ -11,7 +11,6 @@
 	<div class="top-section">
 		<div class="top-left">
 			<h2 class="depth">EAR TRAINER 3000</h2>
-
 			<TapeLabel />
 			<button class="play-button">Play Notes <Play width={10} /> </button>
 		</div>
