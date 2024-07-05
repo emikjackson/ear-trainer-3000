@@ -5,6 +5,37 @@
 	import TapeLabel from './TapeLabel.svelte';
 	import Play from '$lib/components/icons/Play.svelte';
 	import LittleButtons from './LittleButtons.svelte';
+	import { notes, playingNoteIndex } from '$lib/store.js';
+	import { playNote } from '$lib/helpers.js';
+
+	// Increment the playing note index and play the note
+	const playNextNote = () => {
+		// increment index (if no note is playing, it will be -1 and go to 0)
+		playingNoteIndex.set($playingNoteIndex + 1);
+		// if index is past length, reset to no note and skip playing
+		if ($playingNoteIndex > $notes.length - 1) {
+			playingNoteIndex.set(-1);
+		}
+		// otherwise, play the updated current note
+		else {
+			const noteObj = $notes[$playingNoteIndex];
+			playNote(`${noteObj.note}${noteObj.octave}`);
+		}
+	};
+
+	let interval = null;
+
+	// Play sequence of current notes
+	const playSequence = () => {
+		playNextNote();
+		interval = setInterval(() => {
+			playNextNote();
+			if ($playingNoteIndex < 0 && interval) {
+				clearInterval(interval);
+				interval = null;
+			}
+		}, 700);
+	};
 </script>
 
 <div class="machine">
@@ -12,7 +43,9 @@
 		<div class="top-left">
 			<h2 class="depth">EAR TRAINER 3000</h2>
 			<TapeLabel />
-			<button class="play-button">Play Notes <Play width={10} /> </button>
+			<button class="play-button" disabled={$playingNoteIndex > -1} on:click={playSequence}
+				>Play Notes <Play />
+			</button>
 		</div>
 		<div class="top-right">
 			<Speaker />

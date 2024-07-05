@@ -14,13 +14,14 @@ import { PITCH_BY_NOTE, NOTES, HALF_STEP_JUMPS, STARTING_OCTAVE } from './consta
 export const getScaleByKey = (key) => {
 	let scale = [];
 	let index = NOTES.indexOf(key);
-	HALF_STEP_JUMPS.forEach((halfStepsToAdd) => {
+	HALF_STEP_JUMPS.forEach((halfStepsToAdd, scaleIndex) => {
 		const modIndex = index % NOTES.length;
 		const pastEnd = index > NOTES.length - 1; // if we've looped around NOTES, increase the octave
 		scale.push({
 			note: NOTES[modIndex],
 			// if we've looped around the end of NOTES, increase the octave
-			octave: pastEnd ? STARTING_OCTAVE + 1 : STARTING_OCTAVE
+			octave: pastEnd ? STARTING_OCTAVE + 1 : STARTING_OCTAVE,
+			num: scaleIndex + 1 // placement in scale (e.g. G is the 3 in a C major scale)
 		});
 		index += halfStepsToAdd;
 	});
@@ -54,4 +55,20 @@ export const playNote = (noteName, type = 'triangle') => {
 	const timeoutId = setTimeout(() => {
 		context.close();
 	}, 2000);
+};
+
+/**
+ * Returns a random index for an array of given length
+ */
+export const getRandomIndex = (length) => Math.floor(Math.random() * length);
+
+/**
+ * Returns an empty array of given length
+ */
+export const getEmptyArray = (n) => {
+	let arr = [];
+	for (let i = 0; i < n; i++) {
+		arr.push('');
+	}
+	return arr;
 };

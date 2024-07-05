@@ -1,19 +1,21 @@
 <script>
-	import { key } from '$lib/store.js';
-	import { getScaleByKey } from '$lib/helpers.js';
+	import { key, scale, regenerateNotes } from '$lib/store.js';
 	import Rotate from '$lib/components/icons/Rotate.svelte';
-	let cool;
+	import { playNote } from '$lib/helpers.js';
 
-	$: cool = getScaleByKey($key);
-	$: console.log('SCALE', cool);
+	// Play root note (first note in scale)
+	const playRootNote = () => {
+		const rootNoteObj = $scale[0];
+		playNote(`${rootNoteObj.note}${rootNoteObj.octave}`);
+	};
 </script>
 
 <div class="wrapper">
 	<div class="buttons">
-		<button
+		<button on:click={regenerateNotes}
 			>Get new notes <div class="circle-button" />
 		</button>
-		<button
+		<button on:click={playRootNote}
 			>Hear root note <div class="circle-button" />
 		</button>
 	</div>

@@ -1,10 +1,10 @@
 <script>
-	import { notes } from '$lib/store.js';
+	import { notes, playingNoteIndex } from '$lib/store.js';
 </script>
 
 <div class="wrapper">
-	{#each notes as note}
-		<div class="light">
+	{#each $notes as note, index}
+		<div class="light" class:bright={index === $playingNoteIndex}>
 			<div class="reflection"></div>
 		</div>
 	{/each}
@@ -23,6 +23,16 @@
 		/* background-color: #aaa36e; */
 		background: radial-gradient(#aaa36e, #787244);
 		position: relative;
+		box-shadow: 0px 0px 0px 0px rgba(255, 255, 255, 0);
+		transition: all 0.2s ease-out;
+	}
+	.light.bright {
+		background: radial-gradient(#fff6b2, #f6de28);
+		box-shadow: 0px 0px 8px 4px rgba(255, 255, 255, 0.2);
+	}
+	.light.bright .reflection {
+		opacity: 0.2;
+		transition: opacity 0.2s ease-out;
 	}
 	.reflection {
 		position: absolute;

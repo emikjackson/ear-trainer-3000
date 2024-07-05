@@ -1,17 +1,9 @@
 <script>
-	import { key, AVAILABLE_KEYS } from '$lib/store.js';
+	import Settings from './Settings.svelte';
 </script>
 
 <div class="wrapper">
-	<h2>Settings</h2>
-	<label>
-		Key:
-		<select bind:value={$key}>
-			{#each AVAILABLE_KEYS as keyOption}
-				<option value={keyOption}>{keyOption}</option>
-			{/each}
-		</select>
-	</label>
+	<Settings />
 </div>
 
 <div class="offset" />

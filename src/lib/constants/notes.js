@@ -4,7 +4,7 @@ export const STARTING_OCTAVE = 3;
 export const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
 // Half step jumps to create major scale
-export const HALF_STEP_JUMPS = [2, 2, 1, 2, 2, 2, 1];
+export const HALF_STEP_JUMPS = [2, 2, 1, 2, 2, 2, 1, 2];
 
 // https://gist.github.com/marcgg/94e97def0e8694f906443ed5262e9cbb
 // Frequencies matched by note name
