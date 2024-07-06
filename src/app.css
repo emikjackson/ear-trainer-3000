@@ -1,3 +1,7 @@
+:root {
+	--sidebar-width: 300px;
+}
+
 body {
 	font-family: 'Nunito', sans-serif;
 	margin: 0px;
@@ -9,4 +13,9 @@ select,
 textarea {
 	font-family: 'Nunito', sans-serif;
 	font-size: 1rem;
+}
+
+.kode {
+	font-family: 'Kode Mono', monospace;
+	font-optical-sizing: auto;
 }

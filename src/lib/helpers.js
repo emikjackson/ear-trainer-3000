@@ -29,12 +29,12 @@ export const getScaleByKey = (key) => {
 };
 
 /**
- * Play note audio, expects 'noteName' to include letter, sharp/flat if applicable, and octave (e.g. 'E#6')
+ * Play note audio from given noteObj
  * Audio context code from https://marcgg.com/blog/2016/11/01/javascript-audio/
- * @param {string} noteName
+ * @param {Note} note
  * @param {*} type
  */
-export const playNote = (noteName, type = 'triangle') => {
+export const playNote = (noteObj, type = 'triangle') => {
 	const fade = 3;
 	const context = new AudioContext();
 	let o = context.createOscillator();
@@ -43,7 +43,7 @@ export const playNote = (noteName, type = 'triangle') => {
 	o.type = type;
 	o.connect(g);
 	// @ts-ignore
-	o.frequency.value = PITCH_BY_NOTE[noteName];
+	o.frequency.value = PITCH_BY_NOTE[`${noteObj.note}${noteObj.octave}`];
 	g.connect(context.destination);
 
 	// Finally this schedules the fade out.

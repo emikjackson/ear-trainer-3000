@@ -6,7 +6,7 @@
 	// Play root note (first note in scale)
 	const playRootNote = () => {
 		const rootNoteObj = $scale[0];
-		playNote(`${rootNoteObj.note}${rootNoteObj.octave}`);
+		playNote(rootNoteObj);
 	};
 </script>
 

@@ -23,7 +23,6 @@
 	<div class="answer-notes">
 		{#each $notes as noteObj, idx (`${noteObj.note}_input_${idx}`)}
 			<div>
-				<!-- <h3>Note {idx + 1}</h3> -->
 				<ul class="note-column">
 					{#each $scale as scaleNote (`${scaleNote.num}_${idx}`)}
 						{@const id = `note-${idx}-${scaleNote.num}`}
@@ -64,7 +63,7 @@
 		margin-top: 20px;
 		padding: 10px;
 		background-color: white;
-		width: 600px;
+		width: 500px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -80,12 +79,6 @@
 		flex-wrap: wrap;
 		max-width: 100%;
 		justify-content: center;
-	}
-
-	.answer-notes h3 {
-		font-size: 1rem;
-		margin: 20px 0px 10px 0px;
-		text-align: center;
 	}
 
 	.note-column {

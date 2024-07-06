@@ -2,11 +2,11 @@
 	// Loosely 2000's-electronic-metronome-inspired machine for playing and visualizing notes
 	import NoteLights from './NoteLights.svelte';
 	import Speaker from './Speaker.svelte';
-	import TapeLabel from './TapeLabel.svelte';
 	import Play from '$lib/components/icons/Play.svelte';
 	import LittleButtons from './LittleButtons.svelte';
 	import { notes, playingNoteIndex } from '$lib/store.js';
 	import { playNote } from '$lib/helpers.js';
+	import ElectricLabel from './ElectricLabel.svelte';
 
 	// Increment the playing note index and play the note
 	const playNextNote = () => {
@@ -19,7 +19,7 @@
 		// otherwise, play the updated current note
 		else {
 			const noteObj = $notes[$playingNoteIndex];
-			playNote(`${noteObj.note}${noteObj.octave}`);
+			playNote(noteObj);
 		}
 	};
 
@@ -41,8 +41,10 @@
 <div class="machine">
 	<div class="top-section">
 		<div class="top-left">
-			<h2 class="depth">EAR TRAINER 3000</h2>
-			<TapeLabel />
+			<div class="top-left-top">
+				<h2 class="depth">EAR TRAINER 3000</h2>
+				<ElectricLabel />
+			</div>
 			<button class="play-button" disabled={$playingNoteIndex > -1} on:click={playSequence}
 				>Play Notes <Play />
 			</button>
@@ -89,7 +91,13 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 10px;
+		justify-content: space-between;
+	}
+
+	.top-left-top {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
 	}
 
 	.top-right {
@@ -102,7 +110,7 @@
 	}
 
 	.bottom-section {
-		padding: 20px 10px;
+		padding: 14px 10px;
 		border-top: 5px solid #434548;
 		background-color: #121313;
 		border-radius: 4px 4px 0px 0px;

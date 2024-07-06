@@ -18,7 +18,7 @@
 		background-color: rgb(241, 230, 201);
 	}
 	.main-wrapper {
-		padding: 20px;
+		padding: 20px 5px;
 		flex-grow: 1;
 		display: flex;
 		justify-content: flex-start;
