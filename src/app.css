@@ -1,10 +1,13 @@
 :root {
 	--sidebar-width: 300px;
+	--correct: #2e860e;
+	--incorrect: #ac0f0f;
 }
 
 body {
 	font-family: 'Nunito', sans-serif;
 	margin: 0px;
+	background-color: #dad1c9;
 }
 
 button,
@@ -18,4 +21,34 @@ textarea {
 .kode {
 	font-family: 'Kode Mono', monospace;
 	font-optical-sizing: auto;
+}
+
+button.boxy {
+	padding: 6px 10px;
+	text-align: center;
+	color: white;
+	background-color: #096daa;
+	border: 0px;
+	border-bottom: 3px solid #05629c;
+	border-radius: 4px;
+	box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+}
+
+button.boxy:hover {
+	background-color: #0b73b3;
+}
+button.boxy:active {
+	background-color: #096daa;
+	border-bottom: 1px solid #05629c;
+	margin-top: 2px;
+}
+
+button.boxy:disabled,
+button.boxy:disabled:active {
+	background-color: #7b7b7b;
+	border-bottom: 3px solid #6d6d6d;
+	margin-top: 0px;
+	cursor: auto;
+	color: lightgray;
 }

@@ -4,9 +4,11 @@
 	import Speaker from './Speaker.svelte';
 	import Play from '$lib/components/icons/Play.svelte';
 	import LittleButtons from './LittleButtons.svelte';
-	import { notes, playingNoteIndex } from '$lib/store.js';
+	import { notes, scale, playingNoteIndex } from '$lib/store.js';
 	import { playNote } from '$lib/helpers.js';
 	import ElectricLabel from './ElectricLabel.svelte';
+	import { ARPEGGIO_NOTE_LENGTH_MS } from '$lib/constants/general.js';
+	import { onDestroy, onMount } from 'svelte';
 
 	// Increment the playing note index and play the note
 	const playNextNote = () => {
@@ -24,9 +26,20 @@
 	};
 
 	let interval = null;
+	let playNotesTimeout = null;
+	let preMount = true;
+
+	// Helper to clear and reset sequence - never want to be playing multiple at the same time
+	const clearAndResetSequence = () => {
+		if (interval || $playingNoteIndex > -1) {
+			interval && clearInterval(interval);
+			playingNoteIndex.set(-1);
+		}
+	};
 
 	// Play sequence of current notes
 	const playSequence = () => {
+		clearAndResetSequence();
 		playNextNote();
 		interval = setInterval(() => {
 			playNextNote();
@@ -36,6 +49,27 @@
 			}
 		}, 700);
 	};
+
+	// Trigger play note sequence after a delay
+	const autoPlaySequence = () => {
+		clearAndResetSequence();
+		if (playNotesTimeout) {
+			clearTimeout(playNotesTimeout);
+		}
+		// If not first render, play after delay for arpeggio
+		if (!preMount) {
+			playNotesTimeout = setTimeout(playSequence, ARPEGGIO_NOTE_LENGTH_MS * $scale.length + 500);
+		}
+	};
+
+	// Auto-play note sequence when notes change (after delay for arpeggio)
+	$: autoPlaySequence($notes);
+
+	onMount(() => (preMount = false));
+	onDestroy(() => {
+		interval && clearInterval(interval);
+		playNotesTimeout && clearTimeout(playNotesTimeout);
+	});
 </script>
 
 <div class="machine">
@@ -68,7 +102,8 @@
 		margin: 0px;
 	}
 	.machine {
-		width: 500px;
+		max-width: 500px;
+		width: 100%;
 		box-sizing: border-box;
 		border-radius: 10px;
 		border-bottom: 10px solid #0b0c0c;
@@ -113,7 +148,6 @@
 		padding: 14px 10px;
 		border-top: 5px solid #434548;
 		background-color: #121313;
-		border-radius: 4px 4px 0px 0px;
 		border-bottom: 1px solid #1c1d1e;
 		position: relative;
 		z-index: 0;
@@ -143,5 +177,25 @@
 		background-color: #dd1b1b;
 		border-bottom: 2px solid #a00d0d;
 		margin-top: 2px;
+	}
+
+	@media (max-width: 900px) {
+		h2 {
+			font-size: 1.1rem;
+		}
+		.machine {
+			border-radius: 10px 10px 6px 6px;
+			border-bottom: 6px solid #0b0c0c;
+		}
+		.play-button {
+			font-size: 0.9rem;
+		}
+		.top-section {
+			border-width: 2px;
+		}
+		.bottom-section {
+			border-width: 2px;
+			padding: 8px 10px;
+		}
 	}
 </style>

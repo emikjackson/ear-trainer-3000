@@ -16,15 +16,16 @@
 	.wrapper {
 		height: 100vh;
 		width: var(--sidebar-width);
-		background-color: #634427;
-		border-right: 4px solid #3b2917;
-		padding: 10px;
+		background-color: #cfbfb2;
+		border-left: 0px;
+		border-top: 0px;
+		padding: 10px 15px;
 		box-sizing: border-box;
 		position: fixed;
 	}
 	@media (max-width: 900px) {
 		.offset {
-			display: none;
+			width: 0px;
 		}
 		.wrapper {
 			display: none;

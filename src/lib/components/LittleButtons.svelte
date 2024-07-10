@@ -2,6 +2,7 @@
 	import { key, scale, regenerateNotes } from '$lib/store.js';
 	import Rotate from '$lib/components/icons/Rotate.svelte';
 	import { playNote } from '$lib/helpers.js';
+	let innerWidth;
 
 	// Play root note (first note in scale)
 	const playRootNote = () => {
@@ -10,13 +11,17 @@
 	};
 </script>
 
+<svelte:window bind:innerWidth />
+
 <div class="wrapper">
 	<div class="buttons">
 		<button on:click={regenerateNotes}
-			>Get new notes <div class="circle-button" />
+			>{innerWidth < 600 ? 'New Notes' : 'Get New Notes'}
+			<div class="circle-button" />
 		</button>
 		<button on:click={playRootNote}
-			>Hear root note <div class="circle-button" />
+			>{innerWidth < 600 ? 'Root Note' : 'Hear Root Note'}
+			<div class="circle-button" />
 		</button>
 	</div>
 	<div class="display">
@@ -50,6 +55,9 @@
 		align-items: center;
 		gap: 8px;
 		cursor: pointer;
+		padding: 0px;
+		box-shadow: none;
+		margin-right: 8px;
 	}
 
 	.circle-button {
@@ -103,5 +111,14 @@
 		left: 3px;
 		background-color: transparent;
 		opacity: 0.2;
+	}
+
+	@media (max-width: 900px) {
+		button {
+			font-size: 0.8rem;
+		}
+		.display {
+			padding: 4px 2px;
+		}
 	}
 </style>

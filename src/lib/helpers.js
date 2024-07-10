@@ -46,8 +46,13 @@ export const playNote = (noteObj, type = 'triangle') => {
 	o.frequency.value = PITCH_BY_NOTE[`${noteObj.note}${noteObj.octave}`];
 	g.connect(context.destination);
 
-	// Finally this schedules the fade out.
-	g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + fade);
+	// Firefox doesn't support 'exponentialRampToValueAtTime', so need to use a diff method for it
+	const isFirefox = typeof InstallTrigger !== 'undefined';
+	if (isFirefox) {
+		g.gain.setTargetAtTime(0, context.currentTime + 0.1, 0.3);
+	} else {
+		g.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + fade);
+	}
 
 	o.start(context.currentTime);
 

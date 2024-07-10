@@ -1,10 +1,22 @@
 <script>
 	// Section for users to enter their answers
-	import { notes, scale, answers, regenerateNotes } from '$lib/store.js';
-	import { getEmptyArray } from '$lib/helpers.js';
+	import {
+		notes,
+		scale,
+		answers,
+		regenerateNotes,
+		playAnswersOnClick,
+		progressiveAnswerIndication,
+		limitPossibleAnswers
+	} from '$lib/store.js';
+	import { playNote } from '$lib/helpers.js';
+	import PaperLines from './PaperLines.svelte';
 
 	let revealAnswer = false;
-	let handleUpdateNotes = () => regenerateNotes();
+	let handleUpdateNotes = () => {
+		revealAnswer = false;
+		regenerateNotes();
+	};
 
 	const compareNotesToAnswer = () => {
 		for (let i = 0; i < $notes.length; i++) {
@@ -14,65 +26,118 @@
 		}
 		return true;
 	};
+
+	// If user has set 'play answer notes when clicked' to true, play the note on click
+	const onAnswerClick = (note) => () => {
+		if ($playAnswersOnClick) {
+			playNote(note);
+		}
+	};
+
+	$: scaleArray = $limitPossibleAnswers ? $scale.slice(0, 5) : $scale;
 </script>
 
 <!-- Answer submit section (selectable column for each note) & answer display -->
 <div class="wrapper">
-	<h3>What notes did you hear?</h3>
+	<PaperLines />
 	<!-- Note select columns -->
-	<div class="answer-notes">
-		{#each $notes as noteObj, idx (`${noteObj.note}_input_${idx}`)}
-			<div>
-				<ul class="note-column">
-					{#each $scale as scaleNote (`${scaleNote.num}_${idx}`)}
-						{@const id = `note-${idx}-${scaleNote.num}`}
-						{@const value = scaleNote.num}
-						<li>
-							<input type="radio" bind:group={$answers[idx]} {id} name={`note-${idx}`} {value} />
-							<label for={id}
-								>{scaleNote.note} <span style="color:#aaa;margin-left: 6px;">{value}</span></label
-							>
-						</li>
+	<div class="content">
+		<h2>What notes did you hear?</h2>
+
+		<div class="answer-notes">
+			{#each $notes as noteObj, idx (`${noteObj.note}_input_${idx}`)}
+				<div>
+					<h3>{idx + 1}</h3>
+					<ul class="note-column">
+						{#each scaleArray as scaleNote, scaleIdx (`${scaleNote.num}_${idx}`)}
+							{@const id = `note-${idx}-${scaleNote.num}`}
+							{@const value = scaleNote.num}
+							<li style={`${$progressiveAnswerIndication ? 'min-width: 70px' : ''}`}>
+								<input
+									type="radio"
+									bind:group={$answers[idx]}
+									{id}
+									name={`note-${idx}`}
+									{value}
+									on:click={onAnswerClick(scaleNote)}
+								/>
+								<label for={id}
+									>{scaleNote.note} <span class="grey">{value}</span>
+									<!-- Show whether or not currently selected not is correct if user has selected 'progressiveAnswerIndication' -->
+									{#if $progressiveAnswerIndication && $answers[idx] === scaleIdx + 1}
+										{#if $answers[idx] === $notes[idx].num}
+											<span class="green">✓</span>
+										{:else}
+											<span class="red">✗</span>
+										{/if}
+									{/if}
+								</label>
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/each}
+		</div>
+		<!-- Correct/incorrect answer displays -->
+		{#if $answers.every((answer) => answer !== '')}
+			{#if compareNotesToAnswer(notes, $answers)}
+				<p class="spaced correct-msg">Huzzah!!! You got it right!</p>
+				<button class="boxy" on:click={handleUpdateNotes}>Get new notes</button>
+			{:else if !revealAnswer}
+				<p class="spaced incorrect-msg">Hmmm... not quite right...</p>
+				<button class="boxy" link on:click={() => (revealAnswer = !revealAnswer)}>
+					I give up! Show me the answer.
+				</button>
+			{:else}
+				<p class="spaced" style="margin-bottom: 5px;">The correct answer was ...</p>
+				<p class="notes-answer">
+					{#each $notes as noteObj, idx}
+						{noteObj.note}
+						<span class="grey">{noteObj.num}</span>{`${idx !== $notes.length - 1 ? ', ' : ''}`}
 					{/each}
-				</ul>
-			</div>
-		{/each}
-	</div>
-	<!-- Correct/incorrect answer displays -->
-	{#if $answers.every((answer) => answer !== '')}
-		{#if compareNotesToAnswer(notes, $answers)}
-			<p class="correct-msg">Huzzah!!! You got it right!</p>
-			<button on:click={handleUpdateNotes}>Get new notes</button>
-		{:else if !revealAnswer}
-			<p class="incorrect-msg">Hmmm... not quite right...</p>
-			<button link on:click={() => (revealAnswer = !revealAnswer)}>
-				I give up! Show me the answer.
-			</button>
-		{:else}
-			<p style="margin-bottom: 0px;">The correct answer was ...</p>
-			<p class="notes-answer">
-				{$notes.map((noteObj) => `${noteObj.note} ${noteObj.num}`).join(', ')}
-			</p>
-			<button on:click={handleUpdateNotes}>Get new notes</button>
+				</p>
+				<button class="boxy" on:click={handleUpdateNotes}>Get new notes</button>
+			{/if}
 		{/if}
-	{/if}
+	</div>
 </div>
 
 <style>
 	.wrapper {
+		position: relative;
 		margin-top: 20px;
 		padding: 10px;
 		background-color: white;
-		width: 500px;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+		width: 550px;
+		max-width: 100%;
+		box-sizing: border-box;
+		flex-grow: 1;
+		box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.1);
 
 		font-family: 'Caveat', cursive;
 		font-optical-sizing: auto;
+		overflow: hidden;
 	}
 
-	/* Answer section styling */
+	.content {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	h2 {
+		text-align: center;
+		margin: 5px 0px;
+		font-size: 1.3rem;
+	}
+
+	h3 {
+		text-align: center;
+		margin: 0px;
+		margin-bottom: 8px;
+	}
 
 	.answer-notes {
 		display: flex;
@@ -87,62 +152,39 @@
 		display: flex;
 		flex-direction: column-reverse;
 		border-radius: 8px;
-		box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
 		margin: 0px 10px;
 	}
 
-	.note-column li {
-		width: 80px;
-		height: 30px;
-		position: relative;
+	li {
+		margin-bottom: 6px;
 	}
 
-	.note-column label,
-	.note-column input {
-		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
+	.grey {
+		color: #aaa;
+		margin-left: 1px;
 	}
 
-	.note-column input[type='radio'] {
-		opacity: 0.01;
-		z-index: 2;
+	.red {
+		color: var(--incorrect);
+		margin-left: 3px;
 	}
 
-	.note-column input[type='radio']:checked + label {
-		background-color: #cff0d6;
+	.green {
+		color: var(--correct);
+		margin-left: 3px;
 	}
 
-	.note-column label {
-		padding: 5px;
-		border: 1px solid #ccc;
-		border-bottom: 0px solid #ccc;
-		z-index: 1;
-		display: inline-flex;
-		justify-content: center;
-		align-items: center;
-		background-color: white;
+	p.spaced {
+		margin-top: 24px;
+		margin-bottom: 10px;
 	}
 
-	.note-column li:last-child label {
-		border-radius: 8px 8px 0px 0px;
+	p {
+		font-size: 1.2rem;
 	}
 
-	.note-column li:first-child label {
-		border-radius: 0px 0px 8px 8px;
-		border-bottom: 1px solid #ccc;
-	}
-
-	.note-column label:hover,
-	.note-column li:hover label {
-		background-color: #ddd;
-		cursor: pointer;
-	}
-
-	.note-column input {
-		cursor: pointer;
+	.notes-answer {
+		margin: 0px;
+		margin-bottom: 10px;
 	}
 </style>

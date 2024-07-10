@@ -1,0 +1,1 @@
+export const ARPEGGIO_NOTE_LENGTH_MS = 100;

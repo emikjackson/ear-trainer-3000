@@ -1,9 +1,8 @@
 <script>
-	import { browser } from '$app/environment';
 	import { notes, playingNoteIndex, scale } from '$lib/store.js';
 	import { playNote } from '$lib/helpers.js';
 	import { onDestroy, onMount } from 'svelte';
-	import { fade } from 'svelte/transition';
+	import { ARPEGGIO_NOTE_LENGTH_MS } from '$lib/constants/general.js';
 
 	let playingTimeout;
 	let colorfulTimeout;
@@ -45,7 +44,7 @@
 				clearInterval(arpeggioInterval);
 				arpeggioInterval = null;
 			}
-		}, 100);
+		}, ARPEGGIO_NOTE_LENGTH_MS);
 	};
 
 	// Show colorful lights to signify that the notes are changing!
@@ -168,5 +167,19 @@
 		border-radius: 5px;
 		background-color: white;
 		opacity: 0.4;
+	}
+	@media (max-width: 600px) {
+		.light {
+			width: 26px;
+			height: 26px;
+			border-radius: 26px;
+		}
+		.reflection {
+			top: 5px;
+			right: 4px;
+			width: 4px;
+			height: 4px;
+			opacity: 0.3;
+		}
 	}
 </style>

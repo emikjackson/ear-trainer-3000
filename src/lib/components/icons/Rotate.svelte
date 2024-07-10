@@ -21,7 +21,13 @@
 	$: rotateTheIcon($notes);
 </script>
 
-<svg id="rotate-icon" {width} height={width} viewBox="0 0 24 24"
+<svg
+	id="rotate-icon"
+	aria-hidden="true"
+	focusable="false"
+	{width}
+	height={width}
+	viewBox="0 0 24 24"
 	><g
 		fill="none"
 		stroke={fill || 'currentColor'}
