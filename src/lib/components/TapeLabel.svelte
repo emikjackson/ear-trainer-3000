@@ -28,7 +28,7 @@
 		position: relative;
 	}
 	svg polygon {
-		fill: #ede8dd;
+		fill: var(--tape);
 		transform: scaleX(0.5);
 	}
 	svg {
@@ -40,8 +40,8 @@
 		font-family: 'Caveat';
 	}
 	.tape-label {
-		background-color: #ede8dd;
-		border-left: 2px solid #ede8dd;
+		background-color: var(--tape);
+		border-left: 2px solid var(--tape);
 		padding: 7px 15px;
 		padding-right: 20px;
 		box-shadow: 0px 1px rgba(0, 0, 0, 0.2);
@@ -55,7 +55,7 @@
 		flex-direction: column;
 		position: relative;
 		z-index: 1;
-		fill: #ede8dd;
+		fill: var(--tape);
 	}
 	.serrated-edge.shadow {
 		position: relative;
@@ -68,6 +68,6 @@
 		width: 6px;
 	}
 	.serrated-edge.shadow svg polygon {
-		fill: #c6c6c6;
+		fill: var(--tape);
 	}
 </style>

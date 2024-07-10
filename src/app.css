@@ -2,12 +2,14 @@
 	--sidebar-width: 300px;
 	--correct: #2e860e;
 	--incorrect: #ac0f0f;
+	--tape: #f5f5f3;
 }
 
 body {
 	font-family: 'Nunito', sans-serif;
 	margin: 0px;
-	background-color: #dad1c9;
+	background-color: #a0ccc0;
+	background: linear-gradient(#a0ccc0, #8ebfbe);
 }
 
 button,
