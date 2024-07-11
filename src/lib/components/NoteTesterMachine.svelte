@@ -79,7 +79,11 @@
 				<h2 class="depth">EAR TRAINER 3000</h2>
 				<ElectricLabel />
 			</div>
-			<button class="play-button" disabled={$playingNoteIndex > -1} on:click={playSequence}
+			<button
+				class="play-button"
+				disabled={$playingNoteIndex > -1}
+				class:disabled={interval}
+				on:click={playSequence}
 				>Play Notes <Play />
 			</button>
 		</div>
@@ -179,11 +183,11 @@
 		margin-top: 2px;
 	}
 
-	.play-button:disabled,
-	.play-button:disabled:active {
-		background-color: var(--grey);
-		border-bottom: 2px solid var(--grey-dark);
-		color: var(--grey-text);
+	.play-button.disabled,
+	.play-button.disabled:active {
+		background-color: var(--red);
+		border-bottom: 2px solid var(--red-dark);
+		color: #ffa2a2;
 		cursor: auto;
 	}
 
