@@ -15,10 +15,17 @@
 		border: 1px solid #434548;
 		border-bottom: 1px solid #1c1d1e;
 		box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.1);
-		color: #b7c97c;
+		color: var(--green-light);
 		font-weight: 600;
 	}
 	p {
 		margin: 0px;
+	}
+
+	@media (max-width: 600px) {
+		.wrapper {
+			font-weight: 400;
+			font-size: 0.9rem;
+		}
 	}
 </style>

@@ -78,6 +78,7 @@
 		flex-direction: column;
 		align-items: center;
 		gap: 2px;
+		min-height: 68px;
 	}
 	.row {
 		display: flex;
@@ -97,6 +98,9 @@
 	}
 
 	@media (max-width: 600px) {
+		.wrapper {
+			min-height: 48px;
+		}
 		.speaker-line {
 			width: 10px;
 			height: 4px;

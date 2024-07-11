@@ -77,3 +77,8 @@ export const getEmptyArray = (n) => {
 	}
 	return arr;
 };
+
+/**
+ * Given an array of booleans, return whether all are true
+ */
+export const checkAllTrue = (boolArray) => boolArray.every((bool) => bool);

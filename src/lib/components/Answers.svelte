@@ -1,5 +1,4 @@
 <script>
-	// Section for users to enter their answers
 	import {
 		notes,
 		scale,
@@ -11,9 +10,23 @@
 	} from '$lib/store.js';
 	import { playNote } from '$lib/helpers.js';
 	import PaperLines from './PaperLines.svelte';
+	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
+
+	// Section for users to enter their answers!
+	// On their first time through, highlight that they can change settings
 
 	let revealAnswer = false;
-	let handleUpdateNotes = () => {
+	let firstRound = true;
+	let preMount = true;
+
+	const updateFirstRound = () => {
+		if (!preMount && firstRound) {
+			firstRound = false;
+		}
+	};
+
+	const handleUpdateNotes = () => {
 		revealAnswer = false;
 		regenerateNotes();
 	};
@@ -34,6 +47,10 @@
 		}
 	};
 
+	onMount(() => (preMount = false));
+
+	$: updateFirstRound($notes);
+
 	$: scaleArray = $limitPossibleAnswers ? $scale.slice(0, 5) : $scale;
 </script>
 
@@ -52,7 +69,7 @@
 						{#each scaleArray as scaleNote, scaleIdx (`${scaleNote.num}_${idx}`)}
 							{@const id = `note-${idx}-${scaleNote.num}`}
 							{@const value = scaleNote.num}
-							<li style={`${$progressiveAnswerIndication ? 'min-width: 70px' : ''}`}>
+							<li style={`${$progressiveAnswerIndication ? 'min-width: 75px' : ''}`}>
 								<input
 									type="radio"
 									bind:group={$answers[idx]}
@@ -81,7 +98,7 @@
 		<!-- Correct/incorrect answer displays -->
 		{#if $answers.every((answer) => answer !== '')}
 			{#if compareNotesToAnswer(notes, $answers)}
-				<p class="spaced correct-msg">Huzzah!!! You got it right!</p>
+				<p transition:fade class="spaced correct-msg">✨ Huzzah!!! You got it right! 🎉</p>
 				<button class="boxy" on:click={handleUpdateNotes}>Get new notes</button>
 			{:else if !revealAnswer}
 				<p class="spaced incorrect-msg">Hmmm... not quite right...</p>
@@ -98,6 +115,12 @@
 				</p>
 				<button class="boxy" on:click={handleUpdateNotes}>Get new notes</button>
 			{/if}
+			{#if firstRound && (revealAnswer || compareNotesToAnswer(notes, $answers))}
+				<p class="settings-msg">
+					← Tip: adjust settings, like <strong>key</strong> and <strong>difficulty</strong>, on the
+					left!
+				</p>
+			{/if}
 		{/if}
 	</div>
 </div>
@@ -107,13 +130,13 @@
 		position: relative;
 		margin-top: 20px;
 		padding: 10px;
-		background-color: white;
+		background-color: #fffffc;
 		width: 550px;
 		max-width: 100%;
 		box-sizing: border-box;
 		flex-grow: 1;
 		box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.1);
-
+		border-radius: 2px 2px 0px 0px;
 		font-family: 'Caveat', cursive;
 		font-optical-sizing: auto;
 		overflow: hidden;
@@ -155,6 +178,11 @@
 		margin: 0px 10px;
 	}
 
+	.settings-msg {
+		margin-top: 8px;
+		color: #575757;
+	}
+
 	li {
 		margin-bottom: 6px;
 	}
@@ -165,12 +193,12 @@
 	}
 
 	.red {
-		color: var(--incorrect);
+		color: var(--red-dark);
 		margin-left: 3px;
 	}
 
 	.green {
-		color: var(--correct);
+		color: var(--green);
 		margin-left: 3px;
 	}
 

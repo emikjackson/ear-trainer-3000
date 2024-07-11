@@ -58,7 +58,7 @@
 		}
 		// If not first render, play after delay for arpeggio
 		if (!preMount) {
-			playNotesTimeout = setTimeout(playSequence, ARPEGGIO_NOTE_LENGTH_MS * $scale.length + 500);
+			playNotesTimeout = setTimeout(playSequence, ARPEGGIO_NOTE_LENGTH_MS * $scale.length + 1000);
 		}
 	};
 
@@ -157,9 +157,9 @@
 	.play-button {
 		padding: 10px 20px;
 		color: white;
-		background-color: #dd1b1b;
+		background-color: var(--red);
 		border: 0px;
-		border-bottom: 4px solid #a00d0d;
+		border-bottom: 4px solid var(--red-dark);
 		border-radius: 4px;
 		box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.15);
 		display: flex;
@@ -171,11 +171,11 @@
 	}
 
 	.play-button:hover {
-		background-color: #f12222;
+		background-color: var(--red-light);
 	}
 	.play-button:active {
-		background-color: #dd1b1b;
-		border-bottom: 2px solid #a00d0d;
+		background-color: var(--red);
+		border-bottom: 2px solid var(--red-dark);
 		margin-top: 2px;
 	}
 

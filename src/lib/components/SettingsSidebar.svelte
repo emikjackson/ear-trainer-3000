@@ -7,7 +7,7 @@
 		limitPossibleAnswers
 	} from '$lib/store.js';
 	import { NOTES } from '$lib/constants/notes.js';
-	import TapeLabel from './TapeLabel.svelte';
+	import SettingsHeader from './SettingsHeader.svelte';
 
 	const adjustAllDifficultySettings = (easyBoolean) => {
 		playAnswersOnClick.set(easyBoolean);
@@ -29,7 +29,7 @@
 	]);
 </script>
 
-<TapeLabel>Settings</TapeLabel>
+<SettingsHeader />
 
 <div class="settings">
 	<h3>General</h3>
@@ -55,7 +55,7 @@
 	<h3>Difficulty</h3>
 
 	<label>
-		Play answer notes when clicked
+		Play notes when clicked
 		<select bind:value={$playAnswersOnClick}>
 			<option value={false}>No</option>
 			<option value={true}>Yes</option>
@@ -63,7 +63,7 @@
 	</label>
 
 	<label>
-		Indicate each answer note's correctness
+		Indicate each note's correctness
 		<select bind:value={$progressiveAnswerIndication}>
 			<option value={false}>No</option>
 			<option value={true}>Yes</option>
@@ -81,9 +81,9 @@
 	<div class="buttons">
 		<div class="button-wrapper">
 			<button
-				class="boxy"
+				class="boxy green"
 				disabled={allEasySettingsOn}
-				on:click={() => adjustAllDifficultySettings(true)}>Make things easier!</button
+				on:click={() => adjustAllDifficultySettings(true)}>Make things easier</button
 			>
 			<div class="little-text">
 				{#if allEasySettingsOn}
@@ -98,7 +98,7 @@
 			<button
 				class="boxy"
 				disabled={allEasySettingsOff}
-				on:click={() => adjustAllDifficultySettings(false)}>Make things harder!</button
+				on:click={() => adjustAllDifficultySettings(false)}>Make things harder</button
 			>
 			<div class="little-text">
 				{#if allEasySettingsOff}
@@ -113,14 +113,15 @@
 
 <style>
 	h3 {
-		margin-bottom: 10px;
+		margin-top: 20px;
+		margin-bottom: 5px;
 		padding-bottom: 5px;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	}
 	.settings {
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
+		gap: 12px;
 	}
 	label {
 		display: flex;
