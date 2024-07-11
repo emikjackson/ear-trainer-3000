@@ -58,7 +58,7 @@
 		}
 		// If not first render, play after delay for arpeggio
 		if (!preMount) {
-			playNotesTimeout = setTimeout(playSequence, ARPEGGIO_NOTE_LENGTH_MS * $scale.length + 1000);
+			playNotesTimeout = setTimeout(playSequence, ARPEGGIO_NOTE_LENGTH_MS * $scale.length + 700);
 		}
 	};
 
@@ -177,6 +177,14 @@
 		background-color: var(--red);
 		border-bottom: 2px solid var(--red-dark);
 		margin-top: 2px;
+	}
+
+	.play-button:disabled,
+	.play-button:disabled:active {
+		background-color: var(--grey);
+		border-bottom: 2px solid var(--grey-dark);
+		color: var(--grey-text);
+		cursor: auto;
 	}
 
 	@media (max-width: 900px) {

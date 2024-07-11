@@ -13,6 +13,12 @@
 	--blue: #0d8ad3;
 	--blue-dark: #0d74b4;
 	--purple: #6a4c93;
+	--purple-dark: #593b83;
+	--grey: #7b7b7b;
+	--grey-dark: #6d6d6d;
+	--grey-text: lightgray;
+	--grey-link: #272727;
+	--grey-link-dark: #272727;
 
 	/* Palette colors but lighter for background */
 	--salmon-a: rgba(255, 89, 94, 0.7);
@@ -20,6 +26,14 @@
 	--green-a: rgba(138, 201, 38, 0.7);
 	--blue-a: rgba(18, 147, 222, 0.9);
 	--purple-a: rgba(106, 76, 147, 0.9);
+}
+
+a {
+	color: var(--grey-link);
+}
+
+a:visited {
+	color: var(--grey-link-dark);
 }
 
 body {
@@ -77,6 +91,10 @@ button.boxy.green {
 	border-bottom: 3px solid var(--green-dark);
 }
 
+button.boxy.green:active {
+	border-bottom: 1px solid var(--green-dark);
+}
+
 button.boxy.secondary:hover {
 	background-color: var(--green-light);
 }
@@ -87,11 +105,12 @@ button.boxy.secondary:active {
 
 button.boxy:disabled,
 button.boxy:disabled:active {
+	background-color: var(--grey);
+	border-bottom: 3px solid var(--grey-dark);
+	color: var(--grey-text);
 	background-color: #7b7b7b;
-	border-bottom: 3px solid #6d6d6d;
 	margin-top: 0px;
 	cursor: auto;
-	color: lightgray;
 }
 
 button.boxy.secondary {
@@ -118,9 +137,24 @@ button.text-button {
 	background-color: transparent;
 	border: 0px;
 	cursor: pointer;
-	color: #272727;
+	color: var(--grey-link);
 }
 
 button.text-button:hover {
-	color: #2c2c2c;
+	color: var(--grey-link-dark);
+}
+
+/* 
+ * Utility class to hide content visually while keeping it screen reader-accessible.
+ * Original source: https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html 
+ * Where I got it: https://www.sarasoueidan.com/blog/accessible-icon-buttons/
+ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(100%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 }
