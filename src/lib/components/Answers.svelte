@@ -6,12 +6,14 @@
 		regenerateNotes,
 		playAnswersOnClick,
 		progressiveAnswerIndication,
-		limitPossibleAnswers
+		limitPossibleAnswers,
+		settingsModalOpen
 	} from '$lib/store.js';
 	import { playNote } from '$lib/helpers.js';
 	import PaperLines from './PaperLines.svelte';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import Gear from './icons/Gear.svelte';
 
 	// Section for users to enter their answers!
 	// On their first time through, highlight that they can change settings
@@ -19,6 +21,7 @@
 	let revealAnswer = false;
 	let firstRound = true;
 	let preMount = true;
+	let innerWidth;
 
 	const updateFirstRound = () => {
 		if (!preMount && firstRound) {
@@ -53,6 +56,8 @@
 
 	$: scaleArray = $limitPossibleAnswers ? $scale.slice(0, 5) : $scale;
 </script>
+
+<svelte:window bind:innerWidth />
 
 <!-- Answer submit section (selectable column for each note) & answer display -->
 <div class="wrapper">
@@ -117,8 +122,15 @@
 			{/if}
 			{#if firstRound && (revealAnswer || compareNotesToAnswer(notes, $answers))}
 				<p class="settings-msg">
-					← Tip: adjust settings, like <strong>key</strong> and <strong>difficulty</strong>, on the
-					left!
+					{#if innerWidth < 900}
+						Tip: Adjust <strong>key</strong>, <strong>difficulty</strong>, and more with
+						<button class="text-button settings-btn" on:click={() => settingsModalOpen.set(true)}>
+							settings <Gear />
+						</button>
+					{:else}
+						← Tip: adjust settings, like <strong>key</strong> and <strong>difficulty</strong>, on
+						the left!
+					{/if}
 				</p>
 			{/if}
 		{/if}
@@ -179,6 +191,7 @@
 	}
 
 	.settings-msg {
+		text-align: center;
 		margin-top: 8px;
 		color: #575757;
 	}
@@ -214,5 +227,12 @@
 	.notes-answer {
 		margin: 0px;
 		margin-bottom: 10px;
+	}
+
+	.settings-btn {
+		font-family: 'Caveat', cursive;
+		font-size: 1.2rem;
+		color: var(--blue-dark);
+		display: inline-flex;
 	}
 </style>
