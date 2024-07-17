@@ -39,13 +39,20 @@ a:visited {
 body {
 	font-family: 'Lato', sans-serif;
 	margin: 0px;
-	background-image: conic-gradient(
+	/* background-image: conic-gradient(
 		var(--yellow-a),
 		var(--green-a),
 		var(--blue-a),
 		var(--purple-a),
 		var(--salmon-a),
 		var(--yellow-a)
+	); */
+	background-image: conic-gradient(
+		rgba(138, 201, 38, 0.5),
+		rgba(47, 218, 153, 0.6),
+		rgba(28, 180, 230, 0.9),
+		rgba(47, 218, 153, 0.6),
+		rgba(138, 201, 38, 0.5)
 	);
 	background-color: #fff;
 	color: #111111;

@@ -14,6 +14,7 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import Gear from './icons/Gear.svelte';
+	import SpiralBinding from './SpiralBinding.svelte';
 
 	// Section for users to enter their answers!
 	// On their first time through, highlight that they can change settings
@@ -61,6 +62,7 @@
 
 <!-- Answer submit section (selectable column for each note) & answer display -->
 <div class="wrapper">
+	<SpiralBinding />
 	<PaperLines />
 	<!-- Note select columns -->
 	<div class="content">
@@ -151,7 +153,7 @@
 		border-radius: 2px 2px 0px 0px;
 		font-family: 'Caveat', cursive;
 		font-optical-sizing: auto;
-		overflow: hidden;
+		overflow-y: clip;
 	}
 
 	.content {
