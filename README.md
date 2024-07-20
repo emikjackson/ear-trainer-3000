@@ -4,6 +4,7 @@ A simple **listen-and-guess music quiz**, styled something like a metronome I us
 
 Play the game at [ear-trainer-3000.vercel.app](https://ear-trainer-3000.vercel.app/)  🎶
 
+<img width="593" alt="Screenshot 2024-07-20 at 5 21 56 PM" src="https://github.com/user-attachments/assets/b63558d9-5046-4232-b434-eecc99142c36">
 
 ## Context
 
@@ -25,6 +26,4 @@ To run this project locally, you should have at least Node version 16 installed.
 First, clone this directory. Once inside at the root level, run npm install.
 
 Once all dependencies are installed, run npm run dev or npm run dev -- --open (to open a new browser tab) to start the development server.
-
-<img width="593" alt="Screenshot 2024-07-20 at 5 21 56 PM" src="https://github.com/user-attachments/assets/b63558d9-5046-4232-b434-eecc99142c36">
 
