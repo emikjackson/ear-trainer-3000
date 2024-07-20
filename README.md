@@ -8,7 +8,7 @@ Play the game at [ear-trainer-3000.vercel.app](https://ear-trainer-3000.vercel.a
 
 ## Context
 
-A few years ago, my father asked me to make him a little quiz game to help him practice hearing intervals by ear. He had specific recommendations on how the game should work, and provided individual recordings of guitar notes he played to supply the notes.
+A few years ago, my dad asked me to make him a little quiz game to help him practice hearing intervals by ear. He had specific recommendations on how the game should work, and provided individual recordings of guitar notes he played to supply the notes.
 
 You can find that original application and its associated repository here:
 - [Original quiz game](https://music-notes.vercel.app/)
