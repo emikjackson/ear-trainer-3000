@@ -16,7 +16,7 @@
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
-		margin-top: 4px;
+		margin-top: 6px;
 		margin-bottom: 8px;
 		gap: 10px;
 		align-items: center;

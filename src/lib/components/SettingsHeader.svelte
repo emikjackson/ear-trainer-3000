@@ -1,4 +1,4 @@
-<h2>Settings</h2>
+<h2>Trainer Settings</h2>
 
 <style>
 	h2 {

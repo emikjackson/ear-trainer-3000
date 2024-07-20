@@ -1,6 +1,6 @@
 <!-- Stylized "EJ" for use as a simple logo across projects -->
 
-<!-- <a href="___todo___" rel="noopener noreferrer" target="_blank">EJ</a> -->
+<a href="https://www.emijackson.com">EJ</a>
 
 <style>
 	a {
@@ -13,5 +13,11 @@
 	}
 	a:hover {
 		text-shadow: 3px 3px 0px #b7e3ff;
+	}
+	@media (max-width: 600px) {
+		a {
+			font-size: 1.5rem;
+			margin-left: 4px;
+		}
 	}
 </style>

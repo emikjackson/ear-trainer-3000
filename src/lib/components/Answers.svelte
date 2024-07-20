@@ -237,4 +237,10 @@
 		color: var(--blue-dark);
 		display: inline-flex;
 	}
+
+	@media (max-width: 600px) {
+		.wrapper {
+			margin-top: 10px;
+		}
+	}
 </style>
